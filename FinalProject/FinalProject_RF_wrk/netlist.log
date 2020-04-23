@@ -1,0 +1,89 @@
+; Top Design: "FinalProject_RF_lib:LNA_sketch:schematic"
+; Netlisted using Hierarchy Policy: "Standard"
+
+Options ResourceUsage=yes UseNutmegFormat=no EnableOptim=no TopDesignName="FinalProject_RF_lib:LNA_sketch:schematic" DcopOutputNodeVoltages=yes DcopOutputPinCurrents=yes DcopOutputAllSweepPoints=no DcopOutputDcopType=0
+BFP740ESD:Q1  N__14 N__9 0 N__2 
+V_Source:SRC1  VDC 0 Type="V_DC" Vdc=3 V SaveCurrent=1 
+L:L1  VDC N__14 L=20 nH Noise=yes  
+L:L2  N__8 N__9 L=20 nH Noise=yes  
+R:R1  VDC N__8 R=120 kOhm Noise=yes 
+C:C1  N__14 N__13 C=100 nF 
+C:C2  N__16 N__9 C=100 nF 
+Port:Term1  N__16 0 Num=1 Z=50 Ohm Noise=yes 
+Port:Term2  N__13 0 Num=2 Z=50 Ohm Noise=yes 
+S_Param:SP1 CalcS=yes CalcY=no CalcZ=no GroupDelayAperture=1e-4 FreqConversion=no FreqConversionPort=1 StatusLevel=2 CalcNoise=no SortNoise=0 BandwidthForNoise=1.0 Hz DevOpPtLevel=0 \
+SweepVar="freq" SweepPlan="SP1_stim" OutputPlan="SP1_Output" 
+
+SweepPlan: SP1_stim Start=0.1 GHz Stop=6 GHz Step=10 MHz 
+
+OutputPlan:SP1_Output \
+      Type="Output" \
+      UseEquationNestLevel=yes \
+      EquationNestLevel=2 \
+      UseSavedEquationNestLevel=yes \
+      SavedEquationNestLevel=2
+
+#load "python","LinearCollapse"
+Component Module="LinearCollapse" Type="ModelExtractor" NetworkRepresentation=2
+DC:DC1 StatusLevel=2 DevOpPtLevel=0 UseFiniteDiff=no PrintOpPoint=no Restart=1 \
+OutputPlan="DC1_Output" 
+
+OutputPlan:DC1_Output \
+      Type="Output" \
+      UseNodeNestLevel=yes \
+      NodeNestLevel=2 \
+      UseEquationNestLevel=yes \
+      EquationNestLevel=2 \
+      UseSavedEquationNestLevel=yes \
+      SavedEquationNestLevel=2 \
+      UseDeviceCurrentNestLevel=no \
+      DeviceCurrentNestLevel=0 \
+      DeviceCurrentDeviceType="All" \
+      DeviceCurrentSymSyntax=yes \
+      UseCurrentNestLevel=yes \
+      CurrentNestLevel=999 \
+      UseDeviceVoltageNestLevel=no \
+      DeviceVoltageNestLevel=0 \
+      DeviceVoltageDeviceType="All"
+
+#include "/home/chome/cheny51-4962/Desktop/Infineon_RF//circuit/models/RF.net"
+aele StabFact1=stab_fact(S);
+aele Delta=mag(S11*S22-S21*S12);
+S_Param:SP2 CalcS=yes CalcY=no CalcZ=no GroupDelayAperture=1e-4 FreqConversion=no FreqConversionPort=1 StatusLevel=2 CalcNoise=no SortNoise=0 BandwidthForNoise=1.0 Hz DevOpPtLevel=0 \
+SweepVar="freq" SweepPlan="SP2_stim" OutputPlan="SP2_Output" 
+
+SweepPlan: SP2_stim Start=1.4 GHz Stop=1.7 GHz Step=0.1 GHz 
+
+OutputPlan:SP2_Output \
+      Type="Output" \
+      UseEquationNestLevel=yes \
+      EquationNestLevel=2 \
+      UseSavedEquationNestLevel=yes \
+      SavedEquationNestLevel=2
+
+#load "python","LinearCollapse"
+Component Module="LinearCollapse" Type="ModelExtractor" NetworkRepresentation=2
+S_Param:SP3 CalcS=yes CalcY=no CalcZ=no GroupDelayAperture=1e-4 FreqConversion=no FreqConversionPort=1 StatusLevel=2 CalcNoise=yes SortNoise=1 BandwidthForNoise=1.0 MHz Freq=1.55 GHz DevOpPtLevel=0 NoiseInputPort=1 NoiseOutputPort=2 \
+OutputPlan="SP3_Output" 
+
+OutputPlan:SP3_Output \
+      Type="Output" \
+      UseEquationNestLevel=yes \
+      EquationNestLevel=2 \
+      UseSavedEquationNestLevel=yes \
+      SavedEquationNestLevel=2
+
+#load "python","LinearCollapse"
+Component Module="LinearCollapse" Type="ModelExtractor" NetworkRepresentation=2
+aele L_StabCircle1=l_stab_circle(S,51);
+aele L_StabRegion1=l_stab_region(S);
+aele S_StabCircle1=s_stab_circle(S,51);
+aele S_StabRegion1=s_stab_region(S);
+aele GaCircle1=ga_circle(S,,51,3,1);
+aele GsCircle1=gs_circle(S,,51,5,1);
+aele GlCircle1=gl_circle(S,,51,4,1.1);
+aele NsPwrRefBW1=ns_pwr_ref_bw(S21,nf1,1GHz);
+aele NsCircle1=ns_circle({0,0.1,0.2}+NFmin,NFmin,Sopt,Rn/50,51);
+
+NFmin=0.65
+aele Zopt1=zopt(Sopt,PortZ1);

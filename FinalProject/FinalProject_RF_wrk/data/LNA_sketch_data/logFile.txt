@@ -1,0 +1,46 @@
+
+hpeesofsim (*) 470.update0.2 Feb 22 2018, MINT version 4
+    (64-bit linux built: Fri Feb 23, 2018 05:22:05 +0000)
+Copyright 1989 - 2017 Keysight Technologies.
+
+
+2 spare nodes and 2 spare devices are removed.
+The details can be found in file '/home/chome/cheny51-4962/Desktop/Homework/FinalProject/FinalProject_RF_wrk/data/./LNA_sketch_data/spare_removal.txt'.
+
+Warning detected by hpeesofsim in LinearCollapse '_2_' during analysis.
+    LinearCollapse is disabled because there is 'DC' analysis present.
+
+SP SP1[1] <FinalProject_RF_lib:LNA_sketch:schematic>   freq=(100 MHz->6 GHz)
+
+
+DC DC1[1] <FinalProject_RF_lib:LNA_sketch:schematic>  
+.
+DC convergence achieved in 60 iterations.
+
+SP SP2[1] <FinalProject_RF_lib:LNA_sketch:schematic>   freq=(1.4 GHz->1.7 GHz)
+
+
+SP SP3[1] <FinalProject_RF_lib:LNA_sketch:schematic>   freq=1.55 GHz
+Warning detected by hpeesofsim during SP analysis `SP3'.
+    The simulation temperature (25.0 C) is not the same as the IEEE standard
+    noise temperature (290 K or 16.85 C) in the noise analysis `SP3'.
+    If the simulation temperature is not equal to the IEEE standard temperature,
+    then the loss and the noise figure will not agree for a passive circuit.
+    The `Temp' parameter on the Options item can be set to 16.85 C to
+    eliminate this warning message.
+
+
+Warning detected by hpeesofsim during circuit set up.
+    Evaluation failed for ` GsCircle1=gs_circle(S,,51,5,1)':  "GsCircle1":
+      Operation "lvalue [] sweep assignment", Data type mismatch in assignment
+
+Resource usage:
+    User time                 =     2.20 seconds.
+    System time               =     0.16 seconds.
+    Total CPU time            =     2.36 seconds.
+    Simulation stopwatch time =     2.20 seconds.
+    Total stopwatch time      =     2.83 seconds.
+
+    Physical memory used: 97.3 MBytes.
+    Incremental virtual memory (data only) used:  50 MBytes.
+

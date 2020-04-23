@@ -1,0 +1,12 @@
+(nil
+    spare_node_list(2)
+       (
+            "N__2"
+            "Q1._node55"
+        )
+    spare_inst_list(2)
+       (
+            "Q1.r_tr"
+            "Q1.re2"
+        )
+)
